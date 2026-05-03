@@ -1,0 +1,6 @@
+deployment:
+  replicas: "1"
+  imageName: "anandkoppala/frontend"
+  imageVersion: "1.4.0"
+ingress:
+  host: "roboshop-dev.anand88b.online"
