@@ -35,6 +35,10 @@ spec:
           limits:
             cpu: "100m"
             memory: "128Mi"
+        volumeMounts:                   # ← ఇది జోడించండి
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf    
         readinessProbe:
           # httpGet:
           #   path: /health
@@ -50,9 +54,7 @@ spec:
             port: 80
           failureThreshold: 2
           periodSeconds: 10
-        envFrom:
-        - configMapRef:
-            name: frontend
+        
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
