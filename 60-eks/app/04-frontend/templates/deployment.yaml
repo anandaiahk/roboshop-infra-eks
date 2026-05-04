@@ -8,11 +8,7 @@ metadata:
     project: roboshop
     tier: frontend
     component: frontend
-spec:
-  volumes:                        # ← spec: కింద, containers: కి సమానంగా
-  - name: nginx-config
-    configMap:
-      name: frontend    
+   
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
@@ -28,6 +24,11 @@ spec:
         project: roboshop
         tier: frontend
         component: frontend
+    spec:
+      volumes:                        # ← spec: కింద, containers: కి సమానంగా
+      - name: nginx-config
+        configMap:
+         name: frontend     
     spec:
       containers:
       - name: frontend
