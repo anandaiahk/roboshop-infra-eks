@@ -9,6 +9,11 @@ metadata:
     tier: frontend
     component: frontend
 spec:
+  volumes:                        # ← spec: కింద, containers: కి సమానంగా
+  - name: nginx-config
+    configMap:
+      name: frontend    
+spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     # using these labels replica set selects the pod
