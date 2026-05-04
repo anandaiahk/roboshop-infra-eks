@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: frontend
   namespace: roboshop
+  # these labels are replicaset labels
   labels:
     project: roboshop
     tier: frontend
@@ -10,25 +11,23 @@ metadata:
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
+    # using these labels replica set selects the pod
     matchLabels:
       project: roboshop
       tier: frontend
       component: frontend
+  # This is pod definition, pod is subset of replicaset
   template:
     metadata:
       labels:
         project: roboshop
         tier: frontend
         component: frontend
-    spec:                              # ← ఒక్కసారి మాత్రమే!
-      volumes:
-      - name: nginx-config
-        configMap:
-          name: frontend              # ← 10 spaces indentation
+    spec:
       containers:
       - name: frontend
         image: "{{ .Values.deployment.imageName }}:{{ .Values.deployment.imageVersion }}"
-        imagePullPolicy: Always
+        imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
         resources:
           requests:
             cpu: "100m"
@@ -36,11 +35,10 @@ spec:
           limits:
             cpu: "100m"
             memory: "128Mi"
-        volumeMounts:
-        - name: nginx-config
-          mountPath: /etc/nginx/nginx.conf
-          subPath: nginx.conf
         readinessProbe:
+          # httpGet:
+          #   path: /health
+          #   port: 8080
           tcpSocket:
             port: 80
           failureThreshold: 2
@@ -52,6 +50,10 @@ spec:
             port: 80
           failureThreshold: 2
           periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: frontend
+# ---
         
 ---
 apiVersion: networking.k8s.io/v1
