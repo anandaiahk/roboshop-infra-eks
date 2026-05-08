@@ -64,4 +64,4 @@ resource "aws_iam_instance_profile" "bastion" {
   role = aws_iam_role.bastion.name
 }
 
-# mongodb-dev.daws88s.online
+# mongodb-dev.anand88b.online
