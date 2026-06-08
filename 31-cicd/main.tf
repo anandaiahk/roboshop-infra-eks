@@ -80,7 +80,7 @@ resource "aws_instance" "runner" {
   )
 }
 
-resource "aws_instance" "sonarqube" {
+/* resource "aws_instance" "sonarqube" {
   count = var.sonar ? 1 : 0
   ami           = local.sonar_ami_id
   instance_type = "t3.large"
@@ -98,4 +98,4 @@ resource "aws_instance" "sonarqube" {
         Name = "${var.project}-${var.environment}-sonar"
     }
   )
-}
+} */
