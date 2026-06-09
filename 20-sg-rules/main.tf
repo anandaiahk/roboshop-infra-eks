@@ -220,8 +220,7 @@ resource "aws_security_group_rule" "jenkins_agent_ssh" {
   cidr_blocks = ["0.0.0.0/0"]
   security_group_id = local.jenkins_agent_sg_id
 }
-
-/* resource "aws_security_group_rule" "sonar_web" {
+resource "aws_security_group_rule" "sonar_web" {
   type              = "ingress"
   from_port         = 9000
   to_port           = 9000
@@ -239,4 +238,4 @@ resource "aws_security_group_rule" "sonar_ssh" {
   # VPC CIDR
   cidr_blocks = ["0.0.0.0/0"]
   security_group_id = local.sonar_sg_id
-} */
+} 
