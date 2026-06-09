@@ -14,10 +14,9 @@ variable "zone_id" {
 variable "domain_name" {
     default = "anand88b.online"
 }
-
-/* variable "sonar" {
+variable "sonar" {
     default = true
-} */
+} 
 variable "jenkins" {
     default = true
 }
