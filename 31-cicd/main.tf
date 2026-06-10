@@ -83,7 +83,7 @@ resource "aws_instance" "runner" {
 resource "aws_instance" "sonarqube" {
   # Canonical Official Ubuntu 22.04 LTS - us-east-1
   # Owner ID: 099720109477 (Canonical) - Marketplace కాదు, FREE!
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.sonarqube.id
   instance_type = "t3.medium"  # SonarQube కి minimum t3.medium కావాలి
 
   user_data = <<-EOF
