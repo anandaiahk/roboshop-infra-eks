@@ -92,7 +92,7 @@ resource "aws_instance" "sonarqube" {
     volume_size = 20
     volume_type = "gp3" # or "gp2", depending on your preference
   }
-    user_data = base64encode(<<-EOF
+    user_data = <<-EOF
     #!/bin/bash
     set -e
     apt-get update -y
@@ -133,7 +133,7 @@ resource "aws_instance" "sonarqube" {
     systemctl enable sonarqube
     systemctl start sonarqube
   EOF
-  )
+  
   tags = merge(
     local.common_tags,
     {
