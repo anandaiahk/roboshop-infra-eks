@@ -81,58 +81,21 @@ resource "aws_instance" "runner" {
 }
 
 resource "aws_instance" "sonarqube" {
-  # Canonical Official Ubuntu 22.04 LTS - us-east-1
-  # Owner ID: 099720109477 (Canonical) - Marketplace కాదు, FREE!
-  ami           = data.aws_ami.sonarqube.id
-  instance_type = "t3.medium"  # SonarQube కి minimum t3.medium కావాలి
-
-  user_data = <<-EOF
-    #!/bin/bash
-    set -e
-
-    # System update
-    apt-get update -y
-    apt-get install -y openjdk-17-jdk wget unzip
-
-    # vm.max_map_count పెంచాలి (SonarQube requirement)
-    echo "vm.max_map_count=524288" >> /etc/sysctl.conf
-    echo "fs.file-max=131072" >> /etc/sysctl.conf
-    sysctl -p
-
-    # SonarQube download & install
-    cd /opt
-    wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.4.1.88267.zip
-    unzip sonarqube-10.4.1.88267.zip
-    mv sonarqube-10.4.1.88267 sonarqube
-
-    # Dedicated user create
-    useradd -r -s /bin/false sonarqube
-    chown -R sonarqube:sonarqube /opt/sonarqube
-
-    # Systemd service create
-    cat > /etc/systemd/system/sonarqube.service <<'SERVICE'
-    [Unit]
-    Description=SonarQube service
-    After=network.target
-
-    [Service]
-    Type=forking
-    User=sonarqube
-    Group=sonarqube
-    ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
-    ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target
-    SERVICE
-
-    systemctl daemon-reload
-    systemctl enable sonarqube
-    systemctl start sonarqube
-  EOF
-
-  tags = {
-    Name = "SonarQube"
+  count = var.sonar ? 1 : 0
+  ami           = local.sonar_ami_id
+  instance_type = "t3.large"
+  vpc_security_group_ids = [local.sonar_sg_id]
+  subnet_id = local.public_subnet_id #replace your Subnet in default VPC
+  key_name = "daws-88s"
+  # need more for terraform
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3" # or "gp2", depending on your preference
   }
+  tags = merge(
+    local.common_tags,
+    {
+        Name = "${var.project}-${var.environment}-sonar"
+    }
+  )
 }
