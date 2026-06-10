@@ -18,7 +18,7 @@ data "aws_ami" "joindevops" {
   }
 }
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "sonarqube" {
   most_recent = true
   owners      = ["099720109477"]  # Canonical official
 
