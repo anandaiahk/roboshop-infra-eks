@@ -20,21 +20,16 @@ data "aws_ami" "joindevops" {
 
 data "aws_ami" "sonarqube" {
   most_recent = true
-  owners      = ["679593333241"] # Solve DevOps
+  owners      = ["099720109477"]  # Canonical - Free, No Marketplace
 
   filter {
     name   = "name"
-    values = ["SolveDevOps-SonarQube-Server-Ubuntu24.04-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
   }
 }
 
