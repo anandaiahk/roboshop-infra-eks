@@ -15,7 +15,7 @@ variable "domain_name" {
     default = "anand88b.online"
 }
 variable "sonar" {
-    default = false
+    default = true
 } 
 variable "jenkins" {
     default = true
