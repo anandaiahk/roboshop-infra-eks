@@ -82,7 +82,7 @@ resource "aws_instance" "runner" {
 resource "aws_instance" "sonarqube" {
   ami           = data.aws_ami.sonarqube.id
   instance_type = "t3.medium"  # minimum t3.medium కావాలి SonarQube కి
-  key_name               = "anand-88s" 
+  key_name               = "bat-88s" 
   root_block_device {
     volume_size           = 30
     volume_type           = "gp3"
