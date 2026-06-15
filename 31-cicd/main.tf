@@ -81,14 +81,14 @@ resource "aws_instance" "runner" {
 }
 resource "aws_instance" "sonarqube" {
   count = var.sonar ? 1 : 0
-  ami           = local.sonar_ami_id
+  ami           = data.aws_ami.sonar.id
   instance_type = "t3.large"
   vpc_security_group_ids = [local.sonar_sg_id]
   subnet_id = local.public_subnet_id #replace your Subnet in default VPC
   key_name = "bat-88s"
   # need more for terraform
   root_block_device {
-    volume_size = 50
+    volume_size = 20
     volume_type = "gp3" # or "gp2", depending on your preference
   }
   tags = merge(
