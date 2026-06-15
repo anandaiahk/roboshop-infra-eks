@@ -88,7 +88,7 @@ resource "aws_instance" "sonarqube" {
   key_name = "bat-88s"
   # need more for terraform
   root_block_device {
-    volume_size = 20
+    volume_size = 50
     volume_type = "gp3" # or "gp2", depending on your preference
   }
   tags = merge(
