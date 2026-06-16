@@ -82,6 +82,8 @@ resource "aws_instance" "runner" {
 resource "aws_instance" "sonarqube" {
   ami           = data.aws_ami.sonarqube.id
   instance_type = "t3.medium"  # minimum t3.medium కావాలి SonarQube కి
+  vpc_security_group_ids = [local.sonar_sg_id]
+  subnet_id = local.public_subnet_id #replace your Subnet in default VPC
   key_name               = "anand-88s" 
   root_block_device {
     volume_size           = 30
