@@ -24,6 +24,6 @@ resource "aws_route53_record" "sonarqube" {
   name    = "sonar.${var.domain_name}"
   type    = "A"
   ttl     = "1"
-  records = [aws_instance.sonarqube.public_ip]
+  records = [aws_instance.sonarqube.public[0]_ip]
   allow_overwrite = true
 }
